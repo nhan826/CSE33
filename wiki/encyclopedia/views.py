@@ -33,15 +33,16 @@ def search(request):
     entry = request.GET.get("q")
     entry_name = util.get_entry(entry)
     if entry_name:
-        return HttpResponseRedirect(reverse("entry"))    
-
-    # entries = util.list_entries()
-    # for entry in entries:
-    #     if request == entry:
-    #         return render(request, "encyclopedia/search.html", {  
-    #             "content": markdown(util.get_entry(entry)),
-    #             "entry" : entry.capitalize(),
-    # })   
+        return HttpResponseRedirect(reverse("entry",
+            kwargs={"entry" : entry})) 
+    else: 
+        matches = []
+        for title in util.list_entries():
+            if entry.lower() in title.lower():
+                matches.append(title)
+        return render(request, "encyclopedia/match.html", {
+                    "matches": matches
+        })
 
 
 
