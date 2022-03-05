@@ -1,0 +1,46 @@
+body {
+	padding: 60px;
+	background-color: #FAF9F6;
+	font-family: 'Poppins', sans-serif;
+}
+
+.nav li {
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+label {
+	display: block;
+}
+
+.active_listing {
+	margin-top: 40px;
+	background-color: rgba(199, 199, 199, 0.664);
+	padding: 20px;
+	margin-bottom: 20px;
+	border-radius: 10px;
+}
+
+.active_listing img {
+	max-width: 400px;
+	width: 90%;
+}
+
+.listing_page {
+	width: 80%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 40px;
+	background-color: rgba(75, 114, 139, 0.685);
+	padding: 25px;
+	margin-bottom: 20px;
+	border-radius: 10px;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+}
+
+.listing_page img {
+	max-width: 400px;
+	width: 90%;
+}
