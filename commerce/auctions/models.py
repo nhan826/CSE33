@@ -32,6 +32,7 @@ class Bid(models.Model):
 
 class Comment(models.Model):
     """This model creates fields required for commenting on listings"""
-    listing = models.ForeignKey(Listing,on_delete=models.CASCADE, related_name = "comments")
-    text_comment = models.CharField(max_length= 64)
+    listing = models.ForeignKey(Listing, on_delete=models.CASCADE, related_name = "comments")
+    text_comment = models.TextField(max_length= 128)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name = "comments" )
+

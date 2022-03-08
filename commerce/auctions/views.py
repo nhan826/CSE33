@@ -7,13 +7,20 @@ from django.urls import reverse
 from django.forms import ModelForm
 
 
-from .models import User, Listing
+from .models import User, Listing, Category, Comment
 
 
 class CreateNewListing(ModelForm):
     class Meta:
         model = Listing
         fields = ["title", "description", "current_price", "picture", "picture_text", "category" ]
+    
+class CreateNewComment(ModelForm):
+    class Meta:
+        model = Comment
+        fields = ["text_comment"]
+    
+
 
 
 def index(request):
@@ -80,6 +87,7 @@ def register(request):
     else:
         return render(request, "auctions/register.html")
 
+
 def create_listing(request):
     """This view renders the create listing form. If the request method
      is POST the sumbited data is saved to the listing database and the user 
@@ -97,10 +105,65 @@ def create_listing(request):
         "form": form,    
     })
 
+
 def listing_page(request, listing_id):
     """This view renders a page for each auction listing"""
     listing_page = Listing.objects.get(id = listing_id)    # retrieves listing by id
+    form = CreateNewComment()
+
+    # reference for including multiple forms in a view: https://stackoverflow.com/questions/866272/how-can-i-build-multiple-submit-buttons-django-form
+    if request.method == "POST" and 'create_comment' in request.POST:
+        form = CreateNewComment(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.author = request.user   
+            comment.listing = listing_page
+            comment.save() 
+            return HttpResponseRedirect(reverse("listing_page", kwargs={"listing_id" : listing_id}))
+
+    if request.method == "POST" and 'add_watchlist' in request.POST:
+        listing_page.watchers.add(request.user)
+        listing_page.save()   
+
+    if request.method == "POST" and 'remove_watchlist' in request.POST:
+        current_user = request.user
+        current_user.watching.remove(listing_page)
+
+
+    
+
     return render(request, "auctions/listing_page.html", {
+        "current_user" : request.user,
+        "watchers" : listing_page.watchers.all(),
+        "form" : form,
         "listing": listing_page,   
+        "comment": listing_page.comments.all(),
+    })
+
+def category_page(request):
+    categories = Category.objects.all()
+    return render(request, "auctions/category_page.html", {
+        "categories": categories,
     })
     
+def category_contents(request, category_id):
+    category_content = Category.objects.get(id = category_id)    # retrieves listing by id
+    category_listings = category_content.listings.all()
+    return render(request, "auctions/category_contents.html", {
+        "category_content": category_content,
+        "category_listings": category_listings   
+    })
+
+def watchlist(request):
+        current_user = User.objects.get(username = request.user)
+        return render(request, "auctions/watchlist.html", {
+        "watchlist": current_user.watching.all()
+    })
+
+
+
+
+
+
+
+

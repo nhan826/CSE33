@@ -11,6 +11,12 @@ body {
 
 label {
 	display: block;
+	margin-top: 10px;
+}
+input {
+	display:block;
+	margin-bottom: 10px;
+	margin-top: 10px;
 }
 
 .active_listing {
@@ -43,4 +49,34 @@ label {
 .listing_page img {
 	max-width: 400px;
 	width: 90%;
+}
+
+textarea{
+	width: 90%;
+	padding:20px;
+
+}
+
+.comment_block{
+	width: 90%;
+	margin-top: 40px;
+	background-color: rgba(157, 161, 163, 0.685);
+	padding: 15px;
+	padding-top: 30px;
+	margin-bottom: 20px;
+	border: solid;
+}
+
+.comment_block h6 {
+	font-weight: 600;
+	font-size: 110%;;
+}
+
+.categories ul{
+	list-style: none;
+	margin-top: 30px;
+}
+
+.categories a{
+	color:rgb(2, 68, 5)
 }

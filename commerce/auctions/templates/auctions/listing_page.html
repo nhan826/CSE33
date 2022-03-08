@@ -2,6 +2,19 @@
 
 {% block body %}
 
+    {% if user.is_authenticated %}
+        {% if  current_user not in watchers %}
+        <form action="{% url 'listing_page' listing.id %}" method="post">
+            {% csrf_token %}
+            <button name="add_watchlist" value="Add to Watchlist">Add to Watchlist</button>
+        </form>
+        {% else %}
+        <form action="{% url 'listing_page' listing.id %}" method="post">
+            {% csrf_token %}
+            <button name="remove_watchlist" value="Remove from Watchlist">Remove from Watchlist</button>
+        </form>
+        {% endif %}
+    {% endif %}
 <div class = "listing_page">
     <h4>{{listing.title}}</h4>
     <h6>Seller: {{listing.seller}}</h6>
@@ -9,6 +22,25 @@
     <p>${{listing.current_price}}</p>
     <img src="{{listing.picture}}" alt="{{listing.picture_text}}">
 </div>
+
+{% if user.is_authenticated %}
+    <form action="{% url 'listing_page' listing.id %}" method = "POST" >
+        {% csrf_token %}
+        {{form}}
+        <input type="submit" name = "create_comment" value = "Create Comment">
+    </form>
+{% endif %}
+
+{% for posting in comment%}
+    <div class = "comment_block">
+        <h6>Account: {{posting.author}}</h6>
+        <p>{{posting.text_comment}}</p>
+    </div>
+{% endfor %}
+
+
+
+
 
     
 {% endblock %}

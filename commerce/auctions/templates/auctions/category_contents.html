@@ -1,0 +1,29 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+    {% for listing in category_listings%}
+    {% if listing.is_active %}
+    <div class = "active_listing">  
+        <a href="{% url 'listing_page' listing.id %}"><h4>{{listing.title}}</h4></a>
+        <h6>Seller: {{listing.seller}}</h6>
+        <p>{{listing.description}}</p>
+        <p>${{listing.current_price}}</p>
+        <img src="{{listing.picture}}" alt="{{listing.picture_text}}">
+    </div>
+    {% endif %}
+    {% endfor %}
+{% endblock %}
+
+
+{% for listing in category_listings%}
+{% if listing.is_active %}
+<div class = "active_listing">  
+    <a href="{% url 'listing_page' listing.id %}"><h4>{{listing.title}}</h4></a>
+    <h6>Seller: {{listing.seller}}</h6>
+    <p>{{listing.description}}</p>
+    <p>${{listing.current_price}}</p>
+    <img src="{{listing.picture}}" alt="{{listing.picture_text}}">
+</div>
+{% endif %}
+{% endfor %}
