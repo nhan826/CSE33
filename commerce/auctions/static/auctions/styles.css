@@ -13,8 +13,9 @@ label {
 	display: block;
 	margin-top: 10px;
 }
+
 input {
-	display:block;
+	display: block;
 	margin-bottom: 10px;
 	margin-top: 10px;
 }
@@ -51,13 +52,27 @@ input {
 	width: 90%;
 }
 
-textarea{
-	width: 90%;
-	padding:20px;
-
+.listing_page p {
+	margin:20px;
 }
 
-.comment_block{
+.bid_form input{
+	margin-left:auto;
+	margin-right: auto;
+	display: block;
+	text-align: center;
+}
+.bid_form label{
+	display: none;
+}
+
+
+textarea {
+	width: 90%;
+	padding: 20px;
+}
+
+.comment_block {
 	width: 90%;
 	margin-top: 40px;
 	background-color: rgba(157, 161, 163, 0.685);
@@ -69,14 +84,38 @@ textarea{
 
 .comment_block h6 {
 	font-weight: 600;
-	font-size: 110%;;
+	font-size: 110%;
+	;
 }
 
-.categories ul{
+.categories ul {
 	list-style: none;
 	margin-top: 30px;
 }
 
-.categories a{
-	color:rgb(2, 68, 5)
+.categories a {
+	color: rgb(11, 22, 54)
+}
+
+button {
+	color: white;
+	background-color: rgb(40, 47, 61);
+	padding: 12px;
+	border: none;
+	border-radius: 5px;
+}
+
+button:hover {
+	opacity: 90%;
+}
+.bid_button{
+	margin-top: 60px;
+}
+
+h4.closed_message { 
+	margin: 30px;
+	padding:10px;
+	background-color: rgb(20, 32, 63);
+	color: white;
+	opacity: 70%;
 }

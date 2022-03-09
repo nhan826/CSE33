@@ -8,7 +8,11 @@
             <a href="{% url 'listing_page' listing.id %}"><h4>{{listing.title}}</h4></a>
             <h6>Seller: {{listing.seller}}</h6>
             <p>{{listing.description}}</p>
-            <p>${{listing.current_price}}</p>
+            {% if listing.bids.last.amount %}
+                <p>${{listing.bids.last.amount}}</p>
+            {% else %}
+                <p>{{listing.current_price}}</p>
+            {% endif %}
             <img src="{{listing.picture}}" alt="{{listing.picture_text}}">
         </div>
         {% endif %}

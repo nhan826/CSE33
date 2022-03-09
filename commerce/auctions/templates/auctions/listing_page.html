@@ -3,24 +3,69 @@
 {% block body %}
 
     {% if user.is_authenticated %}
-        {% if  current_user not in watchers %}
-        <form action="{% url 'listing_page' listing.id %}" method="post">
-            {% csrf_token %}
-            <button name="add_watchlist" value="Add to Watchlist">Add to Watchlist</button>
-        </form>
+        {% if current_user == listing.seller%}
+            {% if listing.closed == False %}
+            <form action="{% url 'listing_page' listing.id %}" method="post">
+                {% csrf_token %}
+                <button name="close_page" value="Close this page">Close this page</button>
+            </form>
+            {% endif %}
         {% else %}
-        <form action="{% url 'listing_page' listing.id %}" method="post">
-            {% csrf_token %}
-            <button name="remove_watchlist" value="Remove from Watchlist">Remove from Watchlist</button>
-        </form>
+            {% if  current_user not in watchers %}
+                <form action="{% url 'listing_page' listing.id %}" method="post">
+                    {% csrf_token %}
+                    <button name="add_watchlist" value="Add to Watchlist">Add to Watchlist</button>
+                </form>
+            {% else %}
+                <form action="{% url 'listing_page' listing.id %}" method="post">
+                    {% csrf_token %}
+                    <button name="remove_watchlist" value="Remove from Watchlist">Remove from Watchlist</button>
+                </form>
+            {% endif %}
         {% endif %}
     {% endif %}
+
+
 <div class = "listing_page">
+    {% if listing.closed == True %} 
+        {% if current_user == last_bids.bidder %}
+            {% if  last_bids.bidder != listing.seller%}
+            <h4 class = "closed_message">You've won the auction for this item!</h4>
+            {% else %}
+            <h4 class = "closed_message">Listing is closed</h4>
+            {% endif %}
+        {% else %}
+            <h4 class = "closed_message">Listing is closed</h4>
+        {% endif %}
+    {% endif %}
     <h4>{{listing.title}}</h4>
     <h6>Seller: {{listing.seller}}</h6>
     <p>{{listing.description}}</p>
-    <p>${{listing.current_price}}</p>
     <img src="{{listing.picture}}" alt="{{listing.picture_text}}">
+    {% if last_bids is none%}
+        <p>Current Bid: ${{listing.current_price}}</p>
+    {% else %}
+        <p>Current Bid: ${{last_bids.amount}}</p>
+    {% endif %}
+    
+    {% if user.is_authenticated %}
+        {% if current_user != listing.seller %}
+            {% if listing.closed == False %}
+                <form class = "bid_form" action="{% url 'listing_page' listing.id %}" method = "POST">
+                    {% csrf_token %}
+                    {% comment %} reference for custom validation messages:
+                    https://stackoverflow.com/questions/5272433/html5-form-required-attribute-set-custom-validation-message 
+                    {% endcomment %}
+
+                    {% comment %} I had trouble understanding how to throw an error for bids that are too low —
+                    I was able to access the min value attribute of the input by inspecting how {{bid_form}} rendered 
+                    in my browser and included this input tag below {% endcomment %}
+                    <input type="number" name="amount" min = "{{lower_bound}}" step="0.01" required="" id="id_amount" oninvalid="this.setCustomValidity('Must be higher')" oninput="this.setCustomValidity('')"/>
+                    <input class = "bid_button" type="submit" name = "place_bid" value = "Place a Bid"  >
+                </form>
+            {% endif %}
+        {% endif %}
+    {% endif %}
 </div>
 
 {% if user.is_authenticated %}
@@ -37,10 +82,5 @@
         <p>{{posting.text_comment}}</p>
     </div>
 {% endfor %}
-
-
-
-
-
     
 {% endblock %}
