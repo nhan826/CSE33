@@ -57,7 +57,7 @@
                     https://stackoverflow.com/questions/5272433/html5-form-required-attribute-set-custom-validation-message 
                     {% endcomment %}
 
-                    {% comment %} I had trouble understanding how to throw an error for bids that are too low —
+                    {% comment %} I had trouble figuring out how to throw an error for bids that are too low —
                     I was able to access the min value attribute of the input by inspecting how {{bid_form}} rendered 
                     in my browser and included this input tag below {% endcomment %}
                     <input type="number" name="amount" min = "{{lower_bound}}" step="0.01" required="" id="id_amount" oninvalid="this.setCustomValidity('Must be higher')" oninput="this.setCustomValidity('')"/>

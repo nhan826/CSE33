@@ -36,7 +36,7 @@ def index(request):
 
 
 def login_view(request):
-    """When a user tries to GET the page, this view renders a login form. 
+    """When a user tries to GET the page, this view renders a login form.
     When a form is sumbitted using POST, the user
     is authenticated, signed in, and brought to the home page."""
     if request.method == "POST":
@@ -154,7 +154,7 @@ def listing_page(request, listing_id):
         form = CreateBid(request.POST)
         if form.is_valid():
             new_bid = form.save(commit=False)
-            # includes addition data to save comment
+            # includes additional data to save comment
             new_bid.bidder = request.user      
             new_bid.listing = listing_page
             new_bid.save()
@@ -179,7 +179,8 @@ def listing_page(request, listing_id):
 
 
 def category_page(request):
-    """This view renders a page that displays links for diffent item categories"""
+    """This view renders a page that displays links 
+    for different item categories"""
     categories = Category.objects.all()
     return render(request, "auctions/category_page.html", {
         "categories": categories,
