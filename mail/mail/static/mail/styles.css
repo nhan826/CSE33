@@ -1,0 +1,40 @@
+body{
+    margin: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+textarea {
+    min-height: 400px;
+}
+
+#emails-content > div{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-color: rgb(247, 247, 247);
+    padding: 20px;
+    border: solid black;
+    transition: .1s ease-in-out; 
+}
+
+#emails-content > div:hover{
+    opacity: 80%;
+    background-color: rgb(223, 230, 245);
+}
+
+
+#display-email{
+    background-color: rgb(118, 135, 146);
+    padding: 10px;
+}
+
+#display-email > div{
+    background-color: rgb(235, 235, 235);
+    padding: 20px;
+    line-height: 2;
+    border: solid black;
+}
+
+#display-email > p{
+    line-height: 1;
+    margin: 0;
+}
