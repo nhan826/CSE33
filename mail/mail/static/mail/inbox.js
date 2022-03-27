@@ -1,6 +1,3 @@
-// TO DO: fix send inbox refresh
-// check about styling
-
 let currentMailbox = null;
 let currentEmail = null;
 
@@ -32,16 +29,8 @@ document.addEventListener("DOMContentLoaded", function () {
       .then((response) => response.json())
       .then((result) => {
         console.log(result);
+        load_mailbox("sent");
       });
-
-    // loads the user's sent mailbox once the email has been sent
-
-    // I had trouble getting this view to refresh — I tried changing the code in the load_mailbox function
-    // to include code within the fetch request, but still had this issue
-
-    // While this isn't very good design, I was able to resolve this by calling the load_mail function twice:
-    load_mailbox("sent");
-    load_mailbox("sent");
   };
 });
 
